@@ -95,14 +95,13 @@
 
 		<StackPanel Height="26" Orientation="Horizontal" Margin="0,33,0.333,0" FlowDirection="RightToLeft"
 		            VerticalAlignment="Top" HorizontalAlignment="Right">
-			<Button x:Name="SettingsButton" Content="SETTINGS" Style="{DynamicResource NavHeaderButton}"
+			<Button x:Name="CloseButton" Content="CLOSE" Style="{DynamicResource NavHeaderButton}"
 			        HorizontalAlignment="Left" FontFamily="Calibri" FontSize="13" FontWeight="Bold" />
-			<Button x:Name="MaximizeButton" Content="REPORTS" Style="{DynamicResource NavHeaderButton}"
+			<Button x:Name="SaveButton" Content="SAVE" Style="{DynamicResource NavHeaderButton}"
 			        HorizontalAlignment="Left" FontFamily="Calibri" FontSize="13" FontWeight="Bold" />
-			<Button x:Name="inventoryButton" Content="GENERATE 10" Style="{DynamicResource NavHeaderButton}"
+			<Button x:Name="inventoryButton" Content="FAKEDATA" Style="{DynamicResource NavHeaderButton}"
 			        HorizontalAlignment="Left" FontFamily="Calibri" FontSize="13" FontWeight="Bold" />
-			<Button x:Name="CloseButton" Content="HOME" Style="{DynamicResource NavHeaderButton}" HorizontalAlignment="Left"
-			        FontFamily="Calibri" FontSize="13" FontWeight="Bold" />
+			
 		</StackPanel>
 
 		<Border BorderBrush="#FFD7D6DB" BorderThickness="1" Background="#FFF8F8FA" Margin="1,0" Height="63"
@@ -126,7 +125,7 @@
 		          HorizontalGridLinesBrush="{StaticResource BorderBrushStd}" FontWeight="Bold"
 		          Style="{StaticResource DatagridStyle1}" RowHeight="30" RowHeaderWidth="0" AutoGenerateColumns="False"
 		          GridLinesVisibility="Horizontal" ColumnHeaderHeight="30" HeadersVisibility="Column"
-		          RowBackground="{StaticResource DarkerWhite}" MinRowHeight="30" Grid.RowSpan="2" FontFamily="Calibri" >
+		          RowBackground="{StaticResource DarkerWhite}" MinRowHeight="30" Grid.RowSpan="2" FontFamily="Calibri" ItemsSource="{Binding Path=., Mode=OneWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}">
             <DataGrid.ContextMenu>
                 <ContextMenu >
                     <MenuItem Header="Edit" Click="EditItem"  />

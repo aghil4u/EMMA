@@ -22,18 +22,21 @@ namespace EMMA
         public MainWindow()
         {
             InitializeComponent();
-
+            Equipments = new ObservableCollection<Equipment>();
             Loaded += MainWindow_Loaded;
             Closing += MainWindow_Closing;
             KeyDown += MainWindow_KeyDown;
             SearchBox.KeyDown += SearchBox_KeyDown;
             MasterDataGrid.MouseDoubleClick += MasterDataGrid_MouseDoubleClick;
             MasterDataGrid.CellEditEnding += MasterDataGrid_CellEditEnding;
+            CloseButton.Click += CloseButton_Click;
+            SaveButton.Click += SaveButton_Click;
+            ;
 
             // MasterDataGrid.KeyDown += MasterDataGrid_KeyDown;
             inventoryButton.Click += inventoryButton_Click;
         }
-
+        
         private void MasterDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
             if (MasterDataGrid.SelectedItems.Count > 1)
@@ -50,7 +53,6 @@ namespace EMMA
                             if (el.Text != null) selectedItem.Description = el.Text;
                         }
                     }
-                   
                 }
             }
         }
@@ -61,6 +63,16 @@ namespace EMMA
 
         #region EVENT HANDLERS
 
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            Database.SaveChangesAsync();
+        }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
         private void inventoryButton_Click(object sender, RoutedEventArgs e)
         {
             GenerateFakeItems();
@@ -128,7 +140,6 @@ namespace EMMA
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             if (Database.Equipments != null) MasterDataGrid.ItemsSource = Equipments;
-            
             SearchBox.Text = "";
             SearchBox.Focus();
             Thread t = new Thread(UpdateMasterList);
@@ -142,10 +153,6 @@ namespace EMMA
         private void UpdateMasterList()
         {
             StatusUpdate("Loading");
-            if (Equipments==null)
-            {
-                Equipments=new ObservableCollection<Equipment>();
-            }
             foreach (Equipment equ in Database.Equipments)
             {
                 Dispatcher.BeginInvoke(DispatcherPriority.Loaded, (Action) (() => Equipments.Add(equ)));
