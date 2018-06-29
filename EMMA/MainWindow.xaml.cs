@@ -57,10 +57,9 @@ namespace EMMA
 
         private void MasterDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (MasterDataGrid.CurrentColumn.IsReadOnly)
-            {
+           
                 DisplayItemDetails(MasterDataGrid.SelectedItem as Equipment);
-            }
+           
         }
 
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)

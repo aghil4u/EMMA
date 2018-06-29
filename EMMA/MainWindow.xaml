@@ -101,7 +101,7 @@
 			<Grid Margin="-1">
 				<TextBox x:Name="SearchBox" Style="{StaticResource SearchTextBox}" TextWrapping="Wrap" Text="Search"
 				         HorizontalAlignment="Left"
-				         Width="301" Margin="22,21,0,20" BorderThickness="1" Background="Transparent" SelectionBrush="#FF67829C"
+				         Width="222" Margin="22,21,0,20" BorderThickness="1" Background="Transparent" SelectionBrush="#FF67829C"
 				         TabIndex="1" />
 				<TextBlock x:Name="_statusTextBlock" Margin="0,21,10,20" TextWrapping="Wrap" HorizontalAlignment="Right"
 				           TextAlignment="Right" FontFamily="Segoe UI Symbol" />
