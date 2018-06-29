@@ -85,7 +85,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="EquipmentDataModel.cs" />
-    <Compile Include="Helpers\FilteringFataGrid.cs" />
     <Compile Include="Migrations\201806291257397_primary.cs" />
     <Compile Include="Migrations\201806291257397_primary.Designer.cs">
       <DependentUpon>201806291257397_primary.cs</DependentUpon>

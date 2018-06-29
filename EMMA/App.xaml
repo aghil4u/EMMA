@@ -34,13 +34,7 @@
 		<SolidColorBrush x:Key="ListBorder" Color="#828790" />
 
 
-		<DataTemplate x:Key="HeaderTemplate1">
-			<Border Background="{StaticResource BackgroundWhite}" HorizontalAlignment="Stretch"
-			        BorderBrush="{DynamicResource BorderBrushStd}">
-				<TextBlock Text="{Binding Content,RelativeSource={RelativeSource Mode=TemplatedParent}}" FontWeight="Bold"
-				           Margin="0" TextAlignment="Center" Padding="10,0" HorizontalAlignment="Stretch" />
-			</Border>
-		</DataTemplate>
+	
 		<Style x:Key="HeaderStyle1" TargetType="DataGridColumnHeader">
 			<Setter Property="Background" Value="{StaticResource Background}" />
 			<Setter Property="HorizontalAlignment" Value="Center" />

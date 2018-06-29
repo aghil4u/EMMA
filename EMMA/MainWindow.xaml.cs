@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
 
@@ -27,7 +29,7 @@ namespace EMMA
             KeyDown += MainWindow_KeyDown;
             SearchBox.KeyDown += SearchBox_KeyDown;
             MasterDataGrid.MouseDoubleClick += MasterDataGrid_MouseDoubleClick;
-            MasterDataGrid.KeyDown += MasterDataGrid_KeyDown;
+           // MasterDataGrid.KeyDown += MasterDataGrid_KeyDown;
             inventoryButton.Click += inventoryButton_Click;
         }
 
@@ -178,6 +180,34 @@ namespace EMMA
             Database.SaveChanges();
         }
 
+
+        private void headerChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox t = (TextBox)sender;
+            string filter = t.Text;
+            ICollectionView cv = CollectionViewSource.GetDefaultView(MasterDataGrid.ItemsSource);
+            if (filter == "")
+                cv.Filter = null;
+            else
+            {
+                cv.Filter = o =>
+                {
+                    var filterItem = o as Equipment;
+                    char[] searchSplitters = { '+', '-' };
+                    var filterText = filter.Split(searchSplitters, StringSplitOptions.RemoveEmptyEntries);
+
+                    if (filterText.All(s => filterItem.Description.ToLower().Contains(s.ToLower())))
+                    {
+                        return true;
+                    }
+                    if (filterItem.EquipmentNumber.Contains(filterText[0]))
+                    {
+                        return true;
+                    }
+                    return false;
+                };
+            }
+        }
         #endregion
     }
 }

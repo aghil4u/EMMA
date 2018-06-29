@@ -39,9 +39,18 @@
 				</Setter.Value>
 			</Setter>
 		</Style>
+        <DataTemplate x:Key="DescriptionHeaderTemplate">
+            <Border Background="{StaticResource BackgroundWhite}" HorizontalAlignment="Stretch"
+			        BorderBrush="{DynamicResource BorderBrushStd}" >
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="{Binding Content,RelativeSource={RelativeSource Mode=TemplatedParent}}" FontWeight="Bold"
+				           Margin="0" TextAlignment="Center" Padding="10,0" HorizontalAlignment="Stretch" FontSize="11" />
+                    <TextBox x:Name="txtId" TextChanged="headerChanged"  />
+                </StackPanel>
+            </Border>
+        </DataTemplate>
 
-
-		<Style x:Key="NavHeaderButton" TargetType="{x:Type Button}">
+        <Style x:Key="NavHeaderButton" TargetType="{x:Type Button}">
 			<Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}" />
 
 			<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
@@ -136,13 +145,15 @@
 			</DataGrid.CellStyle>
 
 			<DataGrid.Columns>
+              
 				<DataGridTextColumn Binding="{Binding EquipmentNumber}" ClipboardContentBinding="{x:Null}" Header="ASSET NUMBER"
 				                    IsReadOnly="True" Width="100" MinWidth="150" ElementStyle="{StaticResource CellStyleCentre}" />
 				<DataGridTextColumn Binding="{Binding EquipmentNumber}" ClipboardContentBinding="{x:Null}"
 				                    Header="EQUIPMENT NUMBER"
 				                    IsReadOnly="True" Width="100" MinWidth="150" ElementStyle="{StaticResource CellStyleCentre}" />
 				<DataGridTextColumn Binding="{Binding Description}" ClipboardContentBinding="{x:Null}"
-				                    Header="ITEM DESCRIPTION" MinWidth="200" ElementStyle="{StaticResource CellStyleLeftAlighed}" />
+				                    Header="ITEM DESCRIPTION" MinWidth="200" ElementStyle="{StaticResource CellStyleLeftAlighed}" HeaderTemplate="{StaticResource DescriptionHeaderTemplate}">
+				</DataGridTextColumn>
 				<DataGridTextColumn Binding="{Binding PhysicalQty}" ClipboardContentBinding="{x:Null}" Header="PHYSICAL QTY"
 				                    Width="100" MinWidth="100" ElementStyle="{StaticResource CellStyleCentre}" />
 				<DataGridTextColumn Binding="{Binding StockQty}" ClipboardContentBinding="{x:Null}" Header="STOCK QTY"
