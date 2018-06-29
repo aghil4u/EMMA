@@ -17,7 +17,6 @@ namespace EMMA
     public partial class MainWindow : Window
     {
         public static EquipmentDataModel Database = new EquipmentDataModel();
-        public static ObservableCollection<Equipment> Equipments { get; set; }
 
         public MainWindow()
         {
@@ -31,12 +30,45 @@ namespace EMMA
             MasterDataGrid.CellEditEnding += MasterDataGrid_CellEditEnding;
             CloseButton.Click += CloseButton_Click;
             SaveButton.Click += SaveButton_Click;
+            SearchBox.PreviewKeyDown += SearchBox_PreviewKeyDown;
             ;
 
             // MasterDataGrid.KeyDown += MasterDataGrid_KeyDown;
             inventoryButton.Click += inventoryButton_Click;
         }
-        
+
+        public static ObservableCollection<Equipment> Equipments { get; set; }
+
+        private void SearchBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Down)
+            {
+                MasterDataGrid.Focus();
+                //then create a new cell info, with the item we wish to edit and the column number of the cell we want in edit mode
+                DataGridCellInfo cellInfo = new DataGridCellInfo(MasterDataGrid.Items[0], MasterDataGrid.Columns[0]);
+                //set the cell to be the active one
+                MasterDataGrid.CurrentCell = cellInfo;
+                //scroll the item into view
+                MasterDataGrid.ScrollIntoView(MasterDataGrid.Items[0]);
+                //begin the edit
+                MasterDataGrid.BeginEdit();
+            }
+
+            if (e.Key == Key.Up)
+            {
+                MasterDataGrid.Focus();
+                //then create a new cell info, with the item we wish to edit and the column number of the cell we want in edit mode
+                DataGridCellInfo cellInfo = new DataGridCellInfo(MasterDataGrid.Items[MasterDataGrid.Items.Count - 1],
+                    MasterDataGrid.Columns[0]);
+                //set the cell to be the active one
+                MasterDataGrid.CurrentCell = cellInfo;
+                //scroll the item into view
+                MasterDataGrid.ScrollIntoView(MasterDataGrid.Items[MasterDataGrid.Items.Count - 1]);
+                //begin the edit
+                MasterDataGrid.BeginEdit();
+            }
+        }
+
         private void MasterDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
             if (MasterDataGrid.SelectedItems.Count > 1)
@@ -63,7 +95,6 @@ namespace EMMA
 
         #region EVENT HANDLERS
 
-
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             Database.SaveChangesAsync();
@@ -73,6 +104,7 @@ namespace EMMA
         {
             Close();
         }
+
         private void inventoryButton_Click(object sender, RoutedEventArgs e)
         {
             GenerateFakeItems();
@@ -126,16 +158,14 @@ namespace EMMA
 
         private void SearchBox_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Down || e.Key == Key.Up)
-            {
-                MasterDataGrid.Focus();
-            }
-            else
+
+
             {
                 Dispatcher.BeginInvoke(DispatcherPriority.Input,
                     (Action) (() => MasterDataGrid.Items.Filter = DescriptionFilter));
             }
         }
+
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
