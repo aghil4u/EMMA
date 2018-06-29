@@ -62,7 +62,7 @@
 		</Border>
 		<Label Content="MATERIAL ACQUISITION REGISTRY SYSTEM" HorizontalAlignment="Left" VerticalAlignment="Top"
 		       Margin="70,19,0,0" Foreground="#FFCFD0D4" FontFamily="Calibri" FontWeight="Bold" FontSize="14" />
-		<DataGrid x:Name="MasterDataGrid" Margin="1,59,2,63" AlternatingRowBackground="{DynamicResource Background}"
+        <DataGrid x:Name="MasterDataGrid" Margin="1,59,2,63" AlternatingRowBackground="{DynamicResource Background}"
 		          AlternationCount="2" Background="{StaticResource DarkerWhite}" BorderBrush="#FFDDDDE1"
 		          Foreground="#FFADADAD" IsSynchronizedWithCurrentItem="True" VerticalGridLinesBrush="{x:Null}"
 		          HorizontalGridLinesBrush="{StaticResource BorderBrushStd}" FontWeight="Bold"
@@ -71,41 +71,42 @@
 		          RowBackground="{StaticResource DarkerWhite}" MinRowHeight="30" Grid.RowSpan="2" FontFamily="Calibri">
 
 
-			<DataGrid.CellStyle>
+            <DataGrid.CellStyle>
 
-				<Style TargetType="{x:Type DataGridCell}">
-					<Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}" />
-					<Style.Triggers>
-						<Trigger Property="IsSelected" Value="True">
-							<Setter Property="Background" Value="{StaticResource SelectedItemBg}" />
+                <Style TargetType="{x:Type DataGridCell}">
+                    <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}" />
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="{StaticResource SelectedItemBg}" />
 
-							<Setter Property="BorderBrush" Value="Transparent" />
-							<Setter Property="Foreground" Value="{StaticResource SelectedItemTextColor}" />
-						</Trigger>
-					</Style.Triggers>
-				</Style>
-			</DataGrid.CellStyle>
+                            <Setter Property="BorderBrush" Value="Transparent" />
+                            <Setter Property="Foreground" Value="{StaticResource SelectedItemTextColor}" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.CellStyle>
 
-			<DataGrid.Columns>
-				<DataGridTextColumn Binding="{Binding StockCode}" ClipboardContentBinding="{x:Null}" Header="STOCK CODE"
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding EquipmentNumber}" ClipboardContentBinding="{x:Null}" Header="ASSET NUMBER"
 				                    IsReadOnly="True" Width="100" MinWidth="100" ElementStyle="{StaticResource CellStyleCentre}" />
-				<DataGridTextColumn Binding="{Binding FullDescription}" ClipboardContentBinding="{x:Null}"
+                <DataGridTextColumn Binding="{Binding EquipmentNumber}" ClipboardContentBinding="{x:Null}" Header="EQUIPMENT NUMBER"
+				                    IsReadOnly="True" Width="100" MinWidth="100" ElementStyle="{StaticResource CellStyleCentre}" />
+                <DataGridTextColumn Binding="{Binding Description}" ClipboardContentBinding="{x:Null}"
 				                    Header="ITEM DESCRIPTION" MinWidth="200" ElementStyle="{StaticResource CellStyleLeftAlighed}" />
-				<DataGridTextColumn Binding="{Binding PhysicalQty}" ClipboardContentBinding="{x:Null}" Header="PHYSICAL QTY"
+                <DataGridTextColumn Binding="{Binding PhysicalQty}" ClipboardContentBinding="{x:Null}" Header="PHYSICAL QTY"
 				                    Width="100" MinWidth="100" ElementStyle="{StaticResource CellStyleCentre}" />
-				<DataGridTextColumn Binding="{Binding StockQty}" ClipboardContentBinding="{x:Null}" Header="STOCK QTY"
+                <DataGridTextColumn Binding="{Binding StockQty}" ClipboardContentBinding="{x:Null}" Header="STOCK QTY"
 				                    IsReadOnly="True" Width="100" MinWidth="100" ElementStyle="{StaticResource CellStyleCentre}" />
-				<DataGridTextColumn Binding="{Binding Location}" ClipboardContentBinding="{x:Null}" Header="LOCATION" Width="100"
+                <DataGridTextColumn Binding="{Binding Location}" ClipboardContentBinding="{x:Null}" Header="LOCATION" Width="100"
 				                    MinWidth="100" ElementStyle="{StaticResource CellStyleCentre}" />
-				<DataGridTextColumn Binding="{Binding Type}" ClipboardContentBinding="{x:Null}" Header="TYPE" MinWidth="100"
+                <DataGridTextColumn Binding="{Binding Type}" ClipboardContentBinding="{x:Null}" Header="TYPE" MinWidth="100"
 				                    ElementStyle="{StaticResource CellStyleLeftAlighed}" />
-				<DataGridTextColumn Binding="{Binding Price}" ClipboardContentBinding="{x:Null}" Header="PRICE" MinWidth="100"
+                <DataGridTextColumn Binding="{Binding Price}" ClipboardContentBinding="{x:Null}" Header="PRICE" MinWidth="100"
 				                    ElementStyle="{StaticResource CellStyleLeftAlighed}" />
-			</DataGrid.Columns>
+            </DataGrid.Columns>
 
-		</DataGrid>
-		<Image Source="Image1.png" Visibility="Collapsed" />
-		<Rectangle Fill="#FF8825FA" HorizontalAlignment="Left" Height="21" VerticalAlignment="Top" Width="70"
+        </DataGrid>
+        <Rectangle Fill="#FF8825FA" HorizontalAlignment="Left" Height="21" VerticalAlignment="Top" Width="70"
 		           Margin="0,22,0,0" />
 		<Label HorizontalAlignment="Left" VerticalAlignment="Top" />
 		<Label Content="M A R S" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="7,19,0,0" Foreground="White"

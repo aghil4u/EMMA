@@ -36,7 +36,7 @@ namespace EMMA
 
         private void SaveButtonClick(object sender, RoutedEventArgs e)
         {
-            MainWindow.db.NewTransaction(DataContext as StockItem, double.Parse(qty_textbox.Text), project_textbox.Text,
+            MainWindow.db.NewTransaction(DataContext as Equipment, double.Parse(qty_textbox.Text), project_textbox.Text,
                 Transaction.TransactionTypes.Release);
 
             Close();

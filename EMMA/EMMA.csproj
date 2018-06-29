@@ -74,7 +74,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Helper Classes\DB.cs" />
-    <Compile Include="Helper Classes\StockItem.cs" />
+    <Compile Include="Helper Classes\Equipment.cs" />
     <Compile Include="Helper Classes\StorageSystem.cs" />
     <Compile Include="Helper Classes\Transaction.cs" />
     <Compile Include="IssueWindow.xaml.cs">

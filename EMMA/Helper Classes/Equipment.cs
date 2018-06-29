@@ -3,13 +3,12 @@
 namespace EMMA
 {
 
-    public class StockItem
+    public class Equipment
     {
-        public string StockCode { get; set; }
+        public string EquipmentNumber { get; set; }
 
-        public string FullDescription { get; set; }
+        public string Description { get; set; }
 
-        public string ShortDescription { get; set; }
 
         public double StockQty { get; set; }
 

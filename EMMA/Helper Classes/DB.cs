@@ -11,11 +11,11 @@ namespace EMMA.Helper_Classes
     {
 
 
-        private ObservableCollection<StockItem> _database = new ObservableCollection<StockItem>();
+        private ObservableCollection<Equipment> _database = new ObservableCollection<Equipment>();
         private ObservableCollection<Transaction> _transactions = new ObservableCollection<Transaction>();
 
 
-        public ObservableCollection<StockItem> Database
+        public ObservableCollection<Equipment> Database
         {
             get { return _database; }
             set { _database = value; }
@@ -27,19 +27,19 @@ namespace EMMA.Helper_Classes
             set { _transactions = value; }
         }
 
-        public void NewTransaction(StockItem item, double iqty, string iproject, Transaction.TransactionTypes itype)
+        public void NewTransaction(Equipment item, double iqty, string iproject, Transaction.TransactionTypes itype)
         {
             Transaction iTransaction = new Transaction();
-            iTransaction.ItemStockCode = item.StockCode;
+            iTransaction.ItemStockCode = item.EquipmentNumber;
             iTransaction.Qty = iqty;
             iTransaction.Project = iproject;
             iTransaction.Type = itype;
             iTransaction.Date = DateTime.Now;
-            iTransaction.ItemDescription = item.FullDescription;
+            iTransaction.ItemDescription = item.Description;
             Transactions.Add(iTransaction);
 
-            Database.First((s) => s.StockCode == item.StockCode).PhysicalQty -= iqty;
-            Database.First((s) => s.StockCode == item.StockCode).LastUpdatedPhysicalQty = DateTime.Now;
+            Database.First((s) => s.EquipmentNumber == item.EquipmentNumber).PhysicalQty -= iqty;
+            Database.First((s) => s.EquipmentNumber == item.EquipmentNumber).LastUpdatedPhysicalQty = DateTime.Now;
 
 
         }

@@ -43,12 +43,12 @@ namespace EMMA
                 if (e.Key == Key.S)
                 {
                     e.Handled = true;
-                    DisplayItemDetails(MasterDataGrid.SelectedItem as StockItem);
+                    DisplayItemDetails(MasterDataGrid.SelectedItem as Equipment);
                 }
                 if (e.Key == Key.I)
                 {
                     e.Handled = true;
-                    ShowIssueWindow(MasterDataGrid.SelectedItem as StockItem);
+                    ShowIssueWindow(MasterDataGrid.SelectedItem as Equipment);
                 }
             }
         }
@@ -57,7 +57,7 @@ namespace EMMA
         {
             if (MasterDataGrid.CurrentColumn.IsReadOnly)
             {
-                DisplayItemDetails(MasterDataGrid.SelectedItem as StockItem);
+                DisplayItemDetails(MasterDataGrid.SelectedItem as Equipment);
             }
         }
 
@@ -112,17 +112,17 @@ namespace EMMA
 
         #region MISC METHODS
 
-        private void DisplayItemDetails(StockItem stockItem)
+        private void DisplayItemDetails(Equipment equipment)
         {
             var idw = new ItemDisplayWindow();
-            idw.DataContext = stockItem;
+            idw.DataContext = equipment;
             idw.Show();
         }
 
-        private void ShowIssueWindow(StockItem stockItem)
+        private void ShowIssueWindow(Equipment equipment)
         {
             var iw = new IssueWindow();
-            iw.DataContext = stockItem;
+            iw.DataContext = equipment;
             iw.Show();
         }
 
@@ -147,15 +147,15 @@ namespace EMMA
 
         private bool DescriptionFilter(object obj)
         {
-            var filterItem = obj as StockItem;
+            var filterItem = obj as Equipment;
             char[] searchSplitters = {'+', '-'};
             var filterText = SearchBox.Text.Split(searchSplitters, StringSplitOptions.RemoveEmptyEntries);
 
-            if (filterText.All(s => filterItem.FullDescription.Contains(s.ToUpper())))
+            if (filterText.All(s => filterItem.Description.Contains(s.ToUpper())))
             {
                 return true;
             }
-            if (filterItem.StockCode.Contains(filterText[0]))
+            if (filterItem.EquipmentNumber.Contains(filterText[0]))
             {
                 return true;
             }
@@ -174,27 +174,15 @@ namespace EMMA
 
         private void GenerateFakeItems()
         {
-            //var source = new ExcelPackage(new FileInfo(@"D:\AGHILS\STOCK\MASTER STOCK.xlsx"));
-            //var SWS = source.Workbook.Worksheets[1];
-            //var aAddressRow = 2;
-
-            //while (aAddressRow < 2500)
-            //{
-            //    if (!string.IsNullOrEmpty(SWS.Cells[aAddressRow, 1].Text) &&
-            //        !string.IsNullOrEmpty(SWS.Cells[aAddressRow, 6].Text))
-            //    {
-            //        var tempItem = new StockItem();
-            //        tempItem.StockCode = SWS.Cells[aAddressRow, 1].Text;
-            //        tempItem.FullDescription = SWS.Cells[aAddressRow, 2].Text;
-            //        tempItem.Location = SWS.Cells[aAddressRow, 6].Text;
-            //        tempItem.PhysicalQty = double.Parse(SWS.Cells[aAddressRow, 3].Text);
-            //        tempItem.StockQty = Double.Parse(SWS.Cells[aAddressRow, 4].Text);
-            //        tempItem.Type = SWS.Cells[aAddressRow, 9].Text;
-            //        tempItem.Price = SWS.Cells[aAddressRow, 15].Text;
-            //        db.Database.Add(tempItem);
-            //    }
-            //    aAddressRow++;
-            //}
+            for (int i = 0; i < 100; i++)
+            {
+                Equipment e=new Equipment();
+                e.Description = "Item number" + i;
+                e.EquipmentNumber = i.ToString("0000000000");
+                db.Database.Add(e);
+            }
+            
+           
         }
 
         #endregion

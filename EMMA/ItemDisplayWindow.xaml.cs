@@ -18,13 +18,13 @@ namespace EMMA
 
         private void issue_button_Click(object sender, RoutedEventArgs e)
         {
-            ShowIssueWindow(DataContext as StockItem);
+            ShowIssueWindow(DataContext as Equipment);
         }
 
-        private void ShowIssueWindow(StockItem stockItem)
+        private void ShowIssueWindow(Equipment equipment)
         {
             IssueWindow iw = new IssueWindow();
-            iw.DataContext = stockItem;
+            iw.DataContext = equipment;
             iw.Show();
         }
 
@@ -42,7 +42,7 @@ namespace EMMA
             if (e.Key == Key.I)
             {
                 e.Handled = true;
-                ShowIssueWindow(DataContext as StockItem);
+                ShowIssueWindow(DataContext as Equipment);
             }
         }
     }
