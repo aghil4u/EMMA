@@ -14,7 +14,7 @@ namespace EMMA
     /// </summary>
     public partial class MainWindow : Window
     {
-
+        BackgroundWorker bgWorker = new BackgroundWorker();
         public static EquipmentDataModel Database = new EquipmentDataModel();
         public static ObservableCollection<Equipment> Equipments = new ObservableCollection<Equipment>();
 
@@ -109,21 +109,22 @@ namespace EMMA
             t.Start();
         }
 
-        private void UpdateMasterList()
-        {
-            StatusUpdate("Loading");
-            foreach (Equipment  equ in Database.Equipments)
-            {
-                Dispatcher.BeginInvoke(DispatcherPriority.Loaded, (Action) (() => Equipments.Add(equ)));
-            }
 
-            StatusUpdate("");
-        }
 
         #endregion
 
         #region MISC METHODS
 
+        private void UpdateMasterList()
+        {
+            StatusUpdate("Loading");
+            foreach (Equipment equ in Database.Equipments)
+            {
+                Dispatcher.BeginInvoke(DispatcherPriority.Loaded, (Action)(() => Equipments.Add(equ)));
+            }
+
+            StatusUpdate("");
+        }
         private void StatusUpdate(string s)
         {
             Dispatcher.BeginInvoke(DispatcherPriority.Loaded,

@@ -77,7 +77,10 @@
 		</Style>
 
 	</Window.Resources>
-	<Grid Background="{StaticResource BackgroundWhite}" Margin="0">
+    <Window.Style>
+        <StaticResource ResourceKey="GlassStyle"/>
+    </Window.Style>
+    <Grid Background="{StaticResource BackgroundWhite}" Margin="0">
 
 		<Rectangle Margin="0" Stroke="#FF8825FA" Grid.RowSpan="3" IsEnabled="False" />
 
