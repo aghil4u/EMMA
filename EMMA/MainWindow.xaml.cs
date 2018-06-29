@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -12,7 +14,9 @@ namespace EMMA
     /// </summary>
     public partial class MainWindow : Window
     {
+
         public static EquipmentDataModel Database = new EquipmentDataModel();
+        public static ObservableCollection<Equipment> Equipments = new ObservableCollection<Equipment>();
 
         public MainWindow()
         {
@@ -98,15 +102,33 @@ namespace EMMA
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-
-            if (Database.Equipments != null) MasterDataGrid.ItemsSource =  Database.Equipments.ToList();
+            if (Database.Equipments != null) MasterDataGrid.ItemsSource = Equipments;
             SearchBox.Text = "";
             SearchBox.Focus();
+            Thread t = new Thread(UpdateMasterList);
+            t.Start();
+        }
+
+        private void UpdateMasterList()
+        {
+            StatusUpdate("Loading");
+            foreach (Equipment  equ in Database.Equipments)
+            {
+                Dispatcher.BeginInvoke(DispatcherPriority.Loaded, (Action) (() => Equipments.Add(equ)));
+            }
+
+            StatusUpdate("");
         }
 
         #endregion
 
         #region MISC METHODS
+
+        private void StatusUpdate(string s)
+        {
+            Dispatcher.BeginInvoke(DispatcherPriority.Loaded,
+                (Action) (() => _statusTextBlock.Text = s));
+        }
 
         private void DisplayItemDetails(Equipment equipment)
         {
@@ -129,7 +151,7 @@ namespace EMMA
             char[] searchSplitters = {'+', '-'};
             var filterText = SearchBox.Text.Split(searchSplitters, StringSplitOptions.RemoveEmptyEntries);
 
-            if (filterText.All(s => filterItem.Description.Contains(s.ToUpper())))
+            if (filterText.All(s => filterItem.Description.ToLower().Contains(s.ToLower())))
             {
                 return true;
             }

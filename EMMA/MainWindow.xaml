@@ -4,6 +4,43 @@
         xmlns:shell="clr-namespace:Microsoft.Windows.Shell;assembly=Microsoft.Windows.Shell"
         Title="E.M.M.A" Height="657.316" Width="1221.333" WindowStartupLocation="CenterScreen">
 	<Window.Resources>
+		<Style TargetType="{x:Type TextBox}" x:Key="SearchTextBox">
+			<Setter Property="FocusVisualStyle"
+			        Value="{x:Null}" />
+
+			<Setter Property="Template">
+				<Setter.Value>
+					<!-- Modify default template, to change triggers -->
+					<ControlTemplate TargetType="{x:Type TextBoxBase}">
+						<Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}"
+						        BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}"
+						        SnapsToDevicePixels="True">
+							<ScrollViewer x:Name="PART_ContentHost" Focusable="False" HorizontalScrollBarVisibility="Hidden"
+							              VerticalScrollBarVisibility="Hidden" />
+						</Border>
+						<ControlTemplate.Triggers>
+							<Trigger Property="IsEnabled" Value="False">
+								<Setter Property="Opacity" TargetName="border" Value="0.56" />
+							</Trigger>
+							<!-- Original triggers -->
+							<!--<Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="BorderBrush" TargetName="border" Value="#FF7EB4EA"/>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter Property="BorderBrush" TargetName="border" Value="#FF569DE5"/>
+                        </Trigger>-->
+							<!-- MY trigger -->
+							<Trigger Property="IsFocused" Value="True">
+								<Setter Property="BorderBrush" Value="#FF8825FA" />
+								<Setter Property="BorderThickness" Value="2" />
+							</Trigger>
+						</ControlTemplate.Triggers>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+
+
 		<Style x:Key="NavHeaderButton" TargetType="{x:Type Button}">
 			<Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}" />
 
@@ -38,6 +75,7 @@
 				</Setter.Value>
 			</Setter>
 		</Style>
+
 	</Window.Resources>
 	<Grid Background="{StaticResource BackgroundWhite}" Margin="0">
 
@@ -57,8 +95,16 @@
 
 		<Border BorderBrush="#FFD7D6DB" BorderThickness="1" Background="#FFF8F8FA" Margin="1,0" Height="63"
 		        VerticalAlignment="Bottom" Padding="0">
-			<TextBox x:Name="SearchBox" TextWrapping="Wrap" Text="TextBox" HorizontalAlignment="Left" VerticalAlignment="Center"
-			         Margin="18,20,0,18.667" Width="164" Height="22" />
+			<Grid Margin="-1">
+				<TextBox x:Name="SearchBox" Style="{StaticResource SearchTextBox}" TextWrapping="Wrap" Text="Search"
+				         HorizontalAlignment="Left"
+				         Width="301" Margin="22,21,0,20" BorderThickness="1" Background="Transparent" SelectionBrush="#FF67829C"
+				         TabIndex="1" />
+				<TextBlock x:Name="_statusTextBlock" Margin="0,21,10,20" TextWrapping="Wrap" HorizontalAlignment="Right"
+				           TextAlignment="Right" FontFamily="Segoe UI Symbol" />
+
+			</Grid>
+
 		</Border>
 		<Label Content="EQUIPMENT MAINTANANCE MANAGEMENT APPLICATION" HorizontalAlignment="Left" VerticalAlignment="Top"
 		       Margin="70,19,0,0" Foreground="#FFCFD0D4" FontFamily="Calibri" FontWeight="Bold" FontSize="14" />
