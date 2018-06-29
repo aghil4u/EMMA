@@ -34,11 +34,22 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Windows.Shell">
       <HintPath>Reference Libraries\Microsoft.Windows.Shell.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -73,10 +84,18 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Helper Classes\DB.cs" />
-    <Compile Include="Helper Classes\Equipment.cs" />
-    <Compile Include="Helper Classes\StorageSystem.cs" />
-    <Compile Include="Helper Classes\Transaction.cs" />
+    <Compile Include="EquipmentDataModel.cs" />
+    <Compile Include="Migrations\201806291257397_primary.cs" />
+    <Compile Include="Migrations\201806291257397_primary.Designer.cs">
+      <DependentUpon>201806291257397_primary.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806291312112_extra.cs" />
+    <Compile Include="Migrations\201806291312112_extra.Designer.cs">
+      <DependentUpon>201806291312112_extra.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Equipment.cs" />
+    <Compile Include="Models\Transaction.cs" />
     <Compile Include="IssueWindow.xaml.cs">
       <DependentUpon>IssueWindow.xaml</DependentUpon>
     </Compile>
@@ -102,10 +121,17 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Migrations\201806291257397_primary.resx">
+      <DependentUpon>201806291257397_primary.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806291312112_extra.resx">
+      <DependentUpon>201806291312112_extra.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

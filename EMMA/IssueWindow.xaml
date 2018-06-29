@@ -15,15 +15,15 @@
 
 		<Rectangle Margin="0" Stroke="#FF8825FA" Grid.RowSpan="3" IsEnabled="False" d:IsLocked="True" />
 
-        <StackPanel Height="26" Orientation="Horizontal" Margin="0,0,10,10" FlowDirection="RightToLeft"
+		<StackPanel Height="26" Orientation="Horizontal" Margin="0,0,10,10" FlowDirection="RightToLeft"
 		            VerticalAlignment="Bottom" HorizontalAlignment="Right">
-            <Button x:Name="SettingsButton" Content="CLOSE" Style="{DynamicResource ButtonStyleWithBorders}"
+			<Button x:Name="SettingsButton" Content="CLOSE" Style="{DynamicResource ButtonStyleWithBorders}"
 			        HorizontalAlignment="Left" FontFamily="Calibri" FontSize="13" FontWeight="Bold" Click="CloseButtonClick" />
-            <Button x:Name="MaximizeButton" Content="SAVE" Style="{DynamicResource ButtonStyleWithBorders}"
+			<Button x:Name="MaximizeButton" Content="SAVE" Style="{DynamicResource ButtonStyleWithBorders}"
 			        HorizontalAlignment="Left" FontFamily="Calibri" FontSize="13" FontWeight="Bold" Click="SaveButtonClick"
 			        Margin="10,0,0,0" />
-        </StackPanel>
-        <StackPanel Margin="10,45,10.333,0" Orientation="Vertical" VerticalAlignment="Top">
+		</StackPanel>
+		<StackPanel Margin="10,45,10.333,0" Orientation="Vertical" VerticalAlignment="Top">
 			<StackPanel Margin="0,0,-0.333,0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
 				<Label Content="STOCK CODE" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,-0.333,0"
 				       Foreground="#FFCFD0D4" FontFamily="Calibri" FontWeight="Bold" FontSize="14" />

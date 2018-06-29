@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Input;
-using EMMA.Helper_Classes;
 
 namespace EMMA
 {
@@ -36,8 +35,8 @@ namespace EMMA
 
         private void SaveButtonClick(object sender, RoutedEventArgs e)
         {
-            MainWindow.db.NewTransaction(DataContext as Equipment, double.Parse(qty_textbox.Text), project_textbox.Text,
-                Transaction.TransactionTypes.Release);
+           // MainWindow.Database.NewTransaction(DataContext as Equipment, double.Parse(qty_textbox.Text), project_textbox.Text,
+             //   Transaction.TransactionTypes.Release);
 
             Close();
         }

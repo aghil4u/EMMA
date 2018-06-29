@@ -1,11 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
-using EMMA.Helper_Classes;
 
 namespace EMMA
 {
@@ -14,7 +12,7 @@ namespace EMMA
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static DB db;
+        public static EquipmentDataModel Database = new EquipmentDataModel();
 
         public MainWindow()
         {
@@ -82,7 +80,7 @@ namespace EMMA
 
         private void MainWindow_Closing(object sender, CancelEventArgs e)
         {
-            SaveDatabse();
+            Database.SaveChanges();
         }
 
         private void SearchBox_KeyDown(object sender, KeyEventArgs e)
@@ -100,10 +98,8 @@ namespace EMMA
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            LoadDatabase();
 
-            if (db == null) db = new DB();
-            MasterDataGrid.ItemsSource = db.Database;
+            if (Database.Equipments != null) MasterDataGrid.ItemsSource =  Database.Equipments.ToList();
             SearchBox.Text = "";
             SearchBox.Focus();
         }
@@ -127,24 +123,6 @@ namespace EMMA
         }
 
 
-        private void ExportTransactionReport()
-        {
-            //var Output = new ExcelPackage(new FileInfo("report.xlsx"));
-            //var workSheet = Output.Workbook.Worksheets[1];
-            //var rowCount = 1;
-            //foreach (var transaction in db.Transactions)
-            //{
-            //    workSheet.Cells[rowCount, 1].Value = transaction.Date;
-            //    workSheet.Cells[rowCount, 2].Value = transaction.ItemStockCode;
-            //    workSheet.Cells[rowCount, 3].Value = transaction.Qty;
-            //    workSheet.Cells[rowCount, 4].Value = transaction.Project;
-            //    rowCount++;
-            //}
-
-            //Output.Save();
-            //MessageBox.Show("Report Generated successfully");
-        }
-
         private bool DescriptionFilter(object obj)
         {
             var filterItem = obj as Equipment;
@@ -162,27 +140,20 @@ namespace EMMA
             return false;
         }
 
-        private void SaveDatabse()
-        {
-            StorageSystem.Store(db);
-        }
-
-        private void LoadDatabase()
-        {
-            db = StorageSystem.Read();
-        }
 
         private void GenerateFakeItems()
         {
-            for (int i = 0; i < 100; i++)
+            int lastid = 1;
+            for (int i = 0; i < 10; i++)
             {
-                Equipment e=new Equipment();
+                Equipment e = new Equipment();
+                e.id = lastid + 1;
                 e.Description = "Item number" + i;
                 e.EquipmentNumber = i.ToString("0000000000");
-                db.Database.Add(e);
+                Database.Equipments.Add(e);
+                lastid++;
             }
-            
-           
+            Database.SaveChanges();
         }
 
         #endregion
