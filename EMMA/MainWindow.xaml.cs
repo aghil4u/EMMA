@@ -16,9 +16,8 @@ namespace EMMA
     /// </summary>
     public partial class MainWindow : Window
     {
-        BackgroundWorker bgWorker = new BackgroundWorker();
         public static EquipmentDataModel Database = new EquipmentDataModel();
-        public static ObservableCollection<Equipment> Equipments = new ObservableCollection<Equipment>();
+        public static ObservableCollection<Equipment> Equipments { get; set; }
 
         public MainWindow()
         {
@@ -29,8 +28,35 @@ namespace EMMA
             KeyDown += MainWindow_KeyDown;
             SearchBox.KeyDown += SearchBox_KeyDown;
             MasterDataGrid.MouseDoubleClick += MasterDataGrid_MouseDoubleClick;
-           // MasterDataGrid.KeyDown += MasterDataGrid_KeyDown;
+            MasterDataGrid.CellEditEnding += MasterDataGrid_CellEditEnding;
+
+            // MasterDataGrid.KeyDown += MasterDataGrid_KeyDown;
             inventoryButton.Click += inventoryButton_Click;
+        }
+
+        private void MasterDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            if (MasterDataGrid.SelectedItems.Count > 1)
+            {
+                var column = e.Column as DataGridBoundColumn;
+                if (column != null)
+                {
+                    var bindingPath = (column.Binding as Binding).Path.Path;
+                    if (bindingPath == "Description")
+                    {
+                        var el = e.EditingElement as TextBox;
+                        foreach (Equipment selectedItem in MasterDataGrid.SelectedItems)
+                        {
+                            if (el.Text != null) selectedItem.Description = el.Text;
+                        }
+                    }
+                   
+                }
+            }
+        }
+
+        private void EditItem(object sender, RoutedEventArgs e)
+        {
         }
 
         #region EVENT HANDLERS
@@ -59,9 +85,7 @@ namespace EMMA
 
         private void MasterDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-           
-                DisplayItemDetails(MasterDataGrid.SelectedItem as Equipment);
-           
+            DisplayItemDetails(MasterDataGrid.SelectedItem as Equipment);
         }
 
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
@@ -104,13 +128,12 @@ namespace EMMA
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             if (Database.Equipments != null) MasterDataGrid.ItemsSource = Equipments;
+            
             SearchBox.Text = "";
             SearchBox.Focus();
             Thread t = new Thread(UpdateMasterList);
             t.Start();
         }
-
-
 
         #endregion
 
@@ -119,13 +142,18 @@ namespace EMMA
         private void UpdateMasterList()
         {
             StatusUpdate("Loading");
+            if (Equipments==null)
+            {
+                Equipments=new ObservableCollection<Equipment>();
+            }
             foreach (Equipment equ in Database.Equipments)
             {
-                Dispatcher.BeginInvoke(DispatcherPriority.Loaded, (Action)(() => Equipments.Add(equ)));
+                Dispatcher.BeginInvoke(DispatcherPriority.Loaded, (Action) (() => Equipments.Add(equ)));
             }
 
             StatusUpdate("");
         }
+
         private void StatusUpdate(string s)
         {
             Dispatcher.BeginInvoke(DispatcherPriority.Loaded,
@@ -183,7 +211,7 @@ namespace EMMA
 
         private void headerChanged(object sender, TextChangedEventArgs e)
         {
-            TextBox t = (TextBox)sender;
+            TextBox t = (TextBox) sender;
             string filter = t.Text;
             ICollectionView cv = CollectionViewSource.GetDefaultView(MasterDataGrid.ItemsSource);
             if (filter == "")
@@ -193,7 +221,7 @@ namespace EMMA
                 cv.Filter = o =>
                 {
                     var filterItem = o as Equipment;
-                    char[] searchSplitters = { '+', '-' };
+                    char[] searchSplitters = {'+', '-'};
                     var filterText = filter.Split(searchSplitters, StringSplitOptions.RemoveEmptyEntries);
 
                     if (filterText.All(s => filterItem.Description.ToLower().Contains(s.ToLower())))
@@ -208,6 +236,7 @@ namespace EMMA
                 };
             }
         }
+
         #endregion
     }
 }
