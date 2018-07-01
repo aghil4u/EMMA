@@ -59,7 +59,7 @@ namespace EMMA
 
         private void SyncButton_Click(object sender, RoutedEventArgs e)
         {
-            Thread t=new Thread(UpdateChanges);
+            var t = new Thread(UpdateChanges);
             t.Start();
         }
 
@@ -142,7 +142,14 @@ namespace EMMA
 
         private void inventoryButton_Click(object sender, RoutedEventArgs e)
         {
-            ReadFromRegisters();
+            try
+            {
+                ReadFromRegisters();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
         }
 
         private void MasterDataGrid_KeyDown(object sender, KeyEventArgs e)
@@ -179,14 +186,13 @@ namespace EMMA
 
         private void MainWindow_Closing(object sender, CancelEventArgs e)
         {
-
             try
             {
                 Database.SaveChanges();
             }
             catch (Exception exception)
             {
-                MessageBox.Show("Database Error",exception.Message);
+                MessageBox.Show("Database Error", exception.Message);
             }
         }
 
@@ -241,7 +247,6 @@ namespace EMMA
             iw.Show();
         }
 
-
         private void UpdateChanges()
         {
             ActivateSap();
@@ -250,83 +255,58 @@ namespace EMMA
                 try
                 {
                     if (Equipments[i].Old.EquipmentDescription != Equipments[i].New.EquipmentDescription)
-                    {
-                        
                         EUpdateEquipmentDescription(i);
-                        
-                    }
-                       
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e);
-                 
                 }
 
                 try
                 {
-                    if (Equipments[i].Old.OperationId != Equipments[i].New.OperationId) 
-                    {
-                        
-                        EUpdateOperationId(i);
-                    };
+                    if (Equipments[i].Old.OperationId != Equipments[i].New.OperationId) EUpdateOperationId(i);
+                    ;
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e);
-                    
                 }
 
                 try
                 {
-                    if (Equipments[i].Old.ModelNumber != Equipments[i].New.ModelNumber)
-                    {
-                        
-                        EUpdateModelNumber(i);
-
-                    }
+                    if (Equipments[i].Old.ModelNumber != Equipments[i].New.ModelNumber) EUpdateModelNumber(i);
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e);
-                   
                 }
 
                 try
                 {
-                    if (Equipments[i].Old.SerialNumber != Equipments[i].New.SerialNumber)
-                    {
-                      
-                        EUpdateSerialNumber(i);
-                    }
+                    if (Equipments[i].Old.SerialNumber != Equipments[i].New.SerialNumber) EUpdateSerialNumber(i);
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e);
-                    
                 }
 
                 try
                 {
                     if (Equipments[i].Old.AssetDescription != Equipments[i].New.EquipmentDescription &&
                         Equipments[i].New.EquipmentDescription != "")
-                    {
-                        //MessageBox.Show("found " + Equipments[i].Old.AssetDescription + " ---- " + Equipments[i].New.EquipmentDescription);
                         EUpdateAssetDescription(i);
-                    }
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e);
-                    
                 }
 
                 Dispatcher.BeginInvoke(DispatcherPriority.Input,
-                    (Action)(() => _statusTextBlock.Text = "Updating Values in SAP " + i));
-            
-        }
+                    (Action) (() => _statusTextBlock.Text = "Updating Values in SAP " + i));
+            }
+
             Dispatcher.BeginInvoke(DispatcherPriority.Input,
-                (Action)(() => _statusTextBlock.Text = "All Values Updated in SAP"));
+                (Action) (() => _statusTextBlock.Text = "All Values Updated in SAP"));
         }
 
         private static void ActivateSap()
@@ -381,7 +361,6 @@ namespace EMMA
             Database.Transactions.Add(l);
             Database.SaveChanges();
         }
-
 
         private static void EUpdateSerialNumber(int i)
         {
@@ -485,7 +464,6 @@ namespace EMMA
             Database.SaveChanges();
         }
 
-
         private bool DescriptionFilter(object obj)
         {
             var filterItem = obj as Equipment;
@@ -496,7 +474,6 @@ namespace EMMA
             if (filterItem.EquipmentNumber.Contains(filterText[0])) return true;
             return false;
         }
-
 
         private void ReadFromRegisters()
         {
@@ -553,7 +530,7 @@ namespace EMMA
 
             Database.SaveChanges();
             Dispatcher.BeginInvoke(DispatcherPriority.Normal,
-                (Action)(() =>
+                (Action) (() =>
                     _statusTextBlock.Text = "Database Updated"));
         }
 
@@ -610,7 +587,7 @@ namespace EMMA
                 for (var i = 2; i < myWorksheet.Dimension.End.Row; i++)
                 {
                     var e = new Equipment();
-                    e.AcquisitionValue = myWorksheet.Cells[i, 6].Text.Trim().Replace(",", string.Empty);
+                    e.AcquisitionValue = float.Parse(myWorksheet.Cells[i, 6].Text.Trim().Replace(",", string.Empty));
                     e.BookValue = myWorksheet.Cells[i, 8].Text.Trim().Replace(",", string.Empty);
                     e.AcquisitionDate = DateTime.Parse(myWorksheet.Cells[i, 4].Value.ToString()).ToOADate()
                         .ToString(CultureInfo.CurrentCulture);

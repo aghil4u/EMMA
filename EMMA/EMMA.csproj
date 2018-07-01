@@ -109,6 +109,14 @@
     <Compile Include="Migrations\201807011109454_eri.Designer.cs">
       <DependentUpon>201807011109454_eri.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201807011118478_erpp.cs" />
+    <Compile Include="Migrations\201807011118478_erpp.Designer.cs">
+      <DependentUpon>201807011118478_erpp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807011120272_sm1.cs" />
+    <Compile Include="Migrations\201807011120272_sm1.Designer.cs">
+      <DependentUpon>201807011120272_sm1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Equipment.cs" />
     <Compile Include="Models\Transaction.cs" />
@@ -151,6 +159,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201807011109454_eri.resx">
       <DependentUpon>201807011109454_eri.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807011118478_erpp.resx">
+      <DependentUpon>201807011118478_erpp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807011120272_sm1.resx">
+      <DependentUpon>201807011120272_sm1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
