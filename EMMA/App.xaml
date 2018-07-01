@@ -55,7 +55,14 @@
 
 		</Style>
 
-		<Style x:Key="CellStyleLeftAlighed" TargetType="TextBlock">
+	    <Style x:Key="CellStyleRightAligned" TargetType="TextBlock">
+	        <Setter Property="HorizontalAlignment" Value="Right" />
+	        <Setter Property="VerticalAlignment" Value="Center" />
+
+
+	    </Style>
+
+        <Style x:Key="CellStyleLeftAlighed" TargetType="TextBlock">
 			<Setter Property="HorizontalAlignment" Value="Left" />
 			<Setter Property="VerticalAlignment" Value="Center" />
 

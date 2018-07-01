@@ -3,184 +3,206 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:shell="clr-namespace:Microsoft.Windows.Shell;assembly=Microsoft.Windows.Shell"
         Title="E.M.M.A" Height="657.316" Width="1221.333" WindowStartupLocation="CenterScreen">
-	<Window.Resources>
-		<Style TargetType="{x:Type TextBox}" x:Key="SearchTextBox">
-			<Setter Property="FocusVisualStyle"
-			        Value="{x:Null}" />
+    <Window.Resources>
+        <Style TargetType="{x:Type TextBox}" x:Key="SearchTextBox">
+            <Setter Property="FocusVisualStyle"
+                    Value="{x:Null}" />
 
-			<Setter Property="Template">
-				<Setter.Value>
-					<!-- Modify default template, to change triggers -->
-					<ControlTemplate TargetType="{x:Type TextBoxBase}">
-						<Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}"
-						        BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}"
-						        SnapsToDevicePixels="True">
-							<ScrollViewer x:Name="PART_ContentHost" Focusable="False" HorizontalScrollBarVisibility="Hidden"
-							              VerticalScrollBarVisibility="Hidden" />
-						</Border>
-						<ControlTemplate.Triggers>
-							<Trigger Property="IsEnabled" Value="False">
-								<Setter Property="Opacity" TargetName="border" Value="0.56" />
-							</Trigger>
-							<!-- Original triggers -->
-							<!--<Trigger Property="IsMouseOver" Value="True">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <!-- Modify default template, to change triggers -->
+                    <ControlTemplate TargetType="{x:Type TextBoxBase}">
+                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{TemplateBinding Background}"
+                                SnapsToDevicePixels="True">
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="False"
+                                          HorizontalScrollBarVisibility="Hidden"
+                                          VerticalScrollBarVisibility="Hidden" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" TargetName="border" Value="0.56" />
+                            </Trigger>
+                            <!-- Original triggers -->
+                            <!--<Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="BorderBrush" TargetName="border" Value="#FF7EB4EA"/>
                         </Trigger>
                         <Trigger Property="IsKeyboardFocused" Value="True">
                             <Setter Property="BorderBrush" TargetName="border" Value="#FF569DE5"/>
                         </Trigger>-->
-							<!-- MY trigger -->
-							<Trigger Property="IsFocused" Value="True">
-								<Setter Property="BorderBrush" Value="#FF8825FA" />
-								<Setter Property="BorderThickness" Value="2" />
-							</Trigger>
-						</ControlTemplate.Triggers>
-					</ControlTemplate>
-				</Setter.Value>
-			</Setter>
-		</Style>
+                            <!-- MY trigger -->
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="BorderBrush" Value="#FF8825FA" />
+                                <Setter Property="BorderThickness" Value="2" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <DataTemplate x:Key="DescriptionHeaderTemplate">
             <Border Background="{StaticResource BackgroundWhite}" HorizontalAlignment="Stretch"
-			        BorderBrush="{DynamicResource BorderBrushStd}" >
+                    BorderBrush="{DynamicResource BorderBrushStd}">
                 <StackPanel Orientation="Vertical">
-                    <TextBlock Text="{Binding Content,RelativeSource={RelativeSource Mode=TemplatedParent}}" FontWeight="Bold"
-				           Margin="0" TextAlignment="Center" Padding="10,0" HorizontalAlignment="Stretch" FontSize="11" />
-                    <TextBox x:Name="txtId" TextChanged="headerChanged"  />
+                    <TextBlock Text="{Binding Content,RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                               FontWeight="Bold"
+                               Margin="0" TextAlignment="Center" Padding="10,0" HorizontalAlignment="Stretch"
+                               FontSize="11" />
+                    <TextBox x:Name="txtId" TextChanged="headerChanged" />
                 </StackPanel>
             </Border>
         </DataTemplate>
 
         <Style x:Key="NavHeaderButton" TargetType="{x:Type Button}">
-			<Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}" />
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}" />
 
-			<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
-			<Setter Property="BorderThickness" Value="1" />
-			<Setter Property="HorizontalContentAlignment" Value="Center" />
-			<Setter Property="VerticalContentAlignment" Value="Center" />
-			<Setter Property="Padding" Value="1" />
-			<Setter Property="Template">
-				<Setter.Value>
-					<ControlTemplate TargetType="{x:Type Button}">
-						<Border x:Name="border" SnapsToDevicePixels="true" VerticalAlignment="Top" HorizontalAlignment="Left">
-							<Label x:Name="contentPresenter" Focusable="False" Content="{TemplateBinding Content}"
-							       FontFamily="{TemplateBinding FontFamily}" FontWeight="Bold" VerticalAlignment="Top"
-							       HorizontalAlignment="Left" Margin="2,0,0,0" FontSize="{TemplateBinding FontSize}" Opacity="0.56" />
-						</Border>
-						<ControlTemplate.Triggers>
-							<Trigger Property="IsDefaulted" Value="true" />
-							<Trigger Property="IsMouseOver" Value="true">
-								<Setter Property="Foreground" TargetName="contentPresenter" Value="#FF7100F5" />
-								<Setter Property="Opacity" TargetName="contentPresenter" Value="0.73" />
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Padding" Value="1" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border" SnapsToDevicePixels="true" VerticalAlignment="Top"
+                                HorizontalAlignment="Left">
+                            <Label x:Name="contentPresenter" Focusable="False" Content="{TemplateBinding Content}"
+                                   FontFamily="{TemplateBinding FontFamily}" FontWeight="Bold" VerticalAlignment="Top"
+                                   HorizontalAlignment="Left" Margin="2,0,0,0" FontSize="{TemplateBinding FontSize}"
+                                   Opacity="0.56" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsDefaulted" Value="true" />
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Foreground" TargetName="contentPresenter" Value="#FF7100F5" />
+                                <Setter Property="Opacity" TargetName="contentPresenter" Value="0.73" />
 
-							</Trigger>
-							<Trigger Property="IsPressed" Value="true" />
-							<Trigger Property="IsEnabled" Value="false">
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true" />
+                            <Trigger Property="IsEnabled" Value="false">
 
-								<Setter Property="Foreground" TargetName="contentPresenter" Value="#FF8825FA" />
-								<Setter Property="Opacity" TargetName="contentPresenter" Value="1" />
-							</Trigger>
-						</ControlTemplate.Triggers>
-					</ControlTemplate>
-				</Setter.Value>
-			</Setter>
-		</Style>
+                                <Setter Property="Foreground" TargetName="contentPresenter" Value="#FF8825FA" />
+                                <Setter Property="Opacity" TargetName="contentPresenter" Value="1" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-	</Window.Resources>
+    </Window.Resources>
     <Window.Style>
-        <StaticResource ResourceKey="GlassStyle"/>
+        <StaticResource ResourceKey="GlassStyle" />
     </Window.Style>
     <Grid Background="{StaticResource BackgroundWhite}" Margin="0">
 
-		<Rectangle Margin="0" Stroke="#FF8825FA" Grid.RowSpan="3" IsEnabled="False" />
+        <Rectangle Margin="0" Stroke="#FF8825FA" Grid.RowSpan="3" IsEnabled="False" />
 
-		<StackPanel Height="26" Orientation="Horizontal" Margin="0,33,0.333,0" FlowDirection="RightToLeft"
-		            VerticalAlignment="Top" HorizontalAlignment="Right">
-			<Button x:Name="CloseButton" Content="CLOSE" Style="{DynamicResource NavHeaderButton}"
-			        HorizontalAlignment="Left" FontFamily="Calibri" FontSize="13" FontWeight="Bold" />
-			<Button x:Name="SaveButton" Content="SAVE" Style="{DynamicResource NavHeaderButton}"
-			        HorizontalAlignment="Left" FontFamily="Calibri" FontSize="13" FontWeight="Bold" />
-			<Button x:Name="inventoryButton" Content="LOAD DATA" Style="{DynamicResource NavHeaderButton}"
-			        HorizontalAlignment="Left" FontFamily="Calibri" FontSize="13" FontWeight="Bold" />
-		    <Button x:Name="wipeButton" Content="WIPES DATA" Style="{DynamicResource NavHeaderButton}"
-		            HorizontalAlignment="Left" FontFamily="Calibri" FontSize="13" FontWeight="Bold" />
-			
-		</StackPanel>
+        <StackPanel Height="26" Orientation="Horizontal" Margin="0,33,0.333,0" FlowDirection="RightToLeft"
+                    VerticalAlignment="Top" HorizontalAlignment="Right">
+            <Button x:Name="CloseButton" Content="CLOSE" Style="{DynamicResource NavHeaderButton}"
+                    HorizontalAlignment="Left" FontFamily="Calibri" FontSize="13" FontWeight="Bold" />
+            <Button x:Name="SaveButton" Content="SAVE" Style="{DynamicResource NavHeaderButton}"
+                    HorizontalAlignment="Left" FontFamily="Calibri" FontSize="13" FontWeight="Bold" />
+            <Button x:Name="inventoryButton" Content="LOAD DATA" Style="{DynamicResource NavHeaderButton}"
+                    HorizontalAlignment="Left" FontFamily="Calibri" FontSize="13" FontWeight="Bold" />
+            <Button x:Name="wipeButton" Content="WIPE DATA" Style="{DynamicResource NavHeaderButton}"
+                    HorizontalAlignment="Left" FontFamily="Calibri" FontSize="13" FontWeight="Bold" />
+            <Button x:Name="syncButton" Content="SYNC DATA" Style="{DynamicResource NavHeaderButton}"
+                    HorizontalAlignment="Left" FontFamily="Calibri" FontSize="13" FontWeight="Bold" />
 
-		<Border BorderBrush="#FFD7D6DB" BorderThickness="1" Background="#FFF8F8FA" Margin="1,0" Height="63"
-		        VerticalAlignment="Bottom" Padding="0">
-			<Grid Margin="-1">
-				<TextBox x:Name="SearchBox" Style="{StaticResource SearchTextBox}" TextWrapping="Wrap" Text="Search"
-				         HorizontalAlignment="Left"
-				         Width="222" Margin="22,21,0,20" BorderThickness="1" Background="Transparent" SelectionBrush="#FF67829C"
-				         TabIndex="1" />
-				<TextBlock x:Name="_statusTextBlock" Margin="0,21,10,20" TextWrapping="Wrap" HorizontalAlignment="Right"
-				           TextAlignment="Right" FontFamily="Segoe UI Symbol" />
+        </StackPanel>
 
-			</Grid>
+        <Border BorderBrush="#FFD7D6DB" BorderThickness="1" Background="#FFF8F8FA" Margin="1,0" Height="63"
+                VerticalAlignment="Bottom" Padding="0">
+            <Grid Margin="-1">
+                <TextBox x:Name="SearchBox" Style="{StaticResource SearchTextBox}" TextWrapping="Wrap" Text="Search"
+                         HorizontalAlignment="Left"
+                         Width="222" Margin="22,21,0,20" BorderThickness="1" Background="Transparent"
+                         SelectionBrush="#FF67829C"
+                         TabIndex="1" />
+                <TextBlock x:Name="_statusTextBlock" Margin="0,21,10,20" TextWrapping="Wrap"
+                           HorizontalAlignment="Right"
+                           TextAlignment="Right" FontFamily="Segoe UI Symbol" />
 
-		</Border>
-		<Label Content="EQUIPMENT MAINTANANCE MANAGEMENT APPLICATION" HorizontalAlignment="Left" VerticalAlignment="Top"
-		       Margin="70,19,0,0" Foreground="#FFCFD0D4" FontFamily="Calibri" FontWeight="Bold" FontSize="14" />
-		<DataGrid x:Name="MasterDataGrid" Margin="1,59,2,63" AlternatingRowBackground="{DynamicResource Background}"
-		          AlternationCount="2" Background="{StaticResource DarkerWhite}" BorderBrush="#FFDDDDE1"
-		          Foreground="#FFADADAD" IsSynchronizedWithCurrentItem="True" VerticalGridLinesBrush="{x:Null}"
-		          HorizontalGridLinesBrush="{StaticResource BorderBrushStd}" FontWeight="Bold"
-		          Style="{StaticResource DatagridStyle1}" RowHeight="30" RowHeaderWidth="0" AutoGenerateColumns="False"
-		          GridLinesVisibility="Horizontal" ColumnHeaderHeight="30" HeadersVisibility="Column"
-		          RowBackground="{StaticResource DarkerWhite}" MinRowHeight="30" Grid.RowSpan="2" FontFamily="Calibri" ItemsSource="{Binding Path=., Mode=OneWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}">
+            </Grid>
+
+        </Border>
+        <Label Content="EQUIPMENT MAINTANANCE MANAGEMENT APPLICATION" HorizontalAlignment="Left"
+               VerticalAlignment="Top"
+               Margin="70,19,0,0" Foreground="#FFCFD0D4" FontFamily="Calibri" FontWeight="Bold" FontSize="14" />
+        <DataGrid x:Name="MasterDataGrid" Margin="1,59,2,63" AlternatingRowBackground="{DynamicResource Background}"
+                  AlternationCount="2" Background="{StaticResource DarkerWhite}" BorderBrush="#FFDDDDE1"
+                  Foreground="#FFADADAD" IsSynchronizedWithCurrentItem="True" VerticalGridLinesBrush="{x:Null}"
+                  HorizontalGridLinesBrush="{StaticResource BorderBrushStd}" FontWeight="Bold"
+                  Style="{StaticResource DatagridStyle1}" RowHeight="30" RowHeaderWidth="0" AutoGenerateColumns="False"
+                  GridLinesVisibility="Horizontal" ColumnHeaderHeight="30" HeadersVisibility="Column"
+                  RowBackground="{StaticResource DarkerWhite}" MinRowHeight="30" Grid.RowSpan="2" FontFamily="Calibri"
+                  ItemsSource="{Binding Path=., Mode=OneWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}">
             <DataGrid.ContextMenu>
-                <ContextMenu >
-                    <MenuItem Header="Edit" Click="EditItem"  />
+                <ContextMenu>
+                    <MenuItem Header="Edit" Click="EditItem" />
                 </ContextMenu>
             </DataGrid.ContextMenu>
 
             <DataGrid.CellStyle>
 
-				<Style TargetType="{x:Type DataGridCell}">
-					<Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}" />
-					<Style.Triggers>
-						<Trigger Property="IsSelected" Value="True">
-							<Setter Property="Background" Value="{StaticResource SelectedItemBg}" />
+                <Style TargetType="{x:Type DataGridCell}">
+                    <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}" />
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="{StaticResource SelectedItemBg}" />
 
-							<Setter Property="BorderBrush" Value="Transparent" />
-							<Setter Property="Foreground" Value="{StaticResource SelectedItemTextColor}" />
-						</Trigger>
-					</Style.Triggers>
-				</Style>
-			</DataGrid.CellStyle>
+                            <Setter Property="BorderBrush" Value="Transparent" />
+                            <Setter Property="Foreground" Value="{StaticResource SelectedItemTextColor}" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.CellStyle>
 
-			<DataGrid.Columns>
-              
-				<DataGridTextColumn Binding="{Binding EquipmentNumber}" ClipboardContentBinding="{x:Null}" Header="ASSET"
-				                    IsReadOnly="True" Width="70" MinWidth="80" ElementStyle="{StaticResource CellStyleCentre}" />
-				<DataGridTextColumn Binding="{Binding AssetNumber}" ClipboardContentBinding="{x:Null}"
-				                    Header="EQUIPMENT"
-				                    IsReadOnly="True" Width="80" MinWidth="80" ElementStyle="{StaticResource CellStyleCentre}" />
-				<!--<DataGridTextColumn Binding="{Binding Description}" ClipboardContentBinding="{x:Null}"
+            <DataGrid.Columns>
+
+                <DataGridTextColumn Binding="{Binding EquipmentNumber}" ClipboardContentBinding="{x:Null}"
+                                    Header="ASSET"
+                                    IsReadOnly="True" Width="70" MinWidth="80"
+                                    ElementStyle="{StaticResource CellStyleCentre}" />
+                <DataGridTextColumn Binding="{Binding AssetNumber}" ClipboardContentBinding="{x:Null}"
+                                    Header="EQUIPMENT"
+                                    IsReadOnly="True" Width="80" MinWidth="80"
+                                    ElementStyle="{StaticResource CellStyleCentre}" />
+                <!--<DataGridTextColumn Binding="{Binding Description}" ClipboardContentBinding="{x:Null}"
 				                    Header="ITEM DESCRIPTION" MinWidth="200" ElementStyle="{StaticResource CellStyleLeftAlighed}" HeaderTemplate="{StaticResource DescriptionHeaderTemplate}">
 				</DataGridTextColumn>-->
-                <DataGridTextColumn Binding="{Binding Old.AssetDescription}" ClipboardContentBinding="{x:Null}"
-				                    Header="OLD EQPT DESCRIPTION" MinWidth="200" ElementStyle="{StaticResource CellStyleLeftAlighed}" >
-                </DataGridTextColumn>
-                <DataGridTextColumn Binding="{Binding New.AssetDescription}" ClipboardContentBinding="{x:Null}"
-			                        Header="NEW EQPT DESCRIPTION" MinWidth="200" ElementStyle="{StaticResource CellStyleLeftAlighed}" >
-			    </DataGridTextColumn>
-                <DataGridTextColumn Binding="{Binding New.OperationId}" ClipboardContentBinding="{x:Null}" Header="OPERATION ID"
-			                        IsReadOnly="True" Width="100" MinWidth="100" ElementStyle="{StaticResource CellStyleCentre}" />
-                <DataGridTextColumn Binding="{Binding AcquisitionValue}" ClipboardContentBinding="{x:Null}" Header="PURCHASE VALUE"
-			                        Width="100" MinWidth="100" ElementStyle="{StaticResource CellStyleCentre}" />
-                <DataGridTextColumn Binding="{Binding BookValue}" ClipboardContentBinding="{x:Null}" Header="BOOK VALUE"
-				                    Width="100" MinWidth="100" ElementStyle="{StaticResource CellStyleCentre}" />
+                <DataGridTextColumn Binding="{Binding Old.EquipmentDescription}" ClipboardContentBinding="{x:Null}"
+                                    Header="OLD EQPT DESCRIPTION" MinWidth="200"
+                                    ElementStyle="{StaticResource CellStyleLeftAlighed}" />
+                <DataGridTextColumn Binding="{Binding New.EquipmentDescription}" ClipboardContentBinding="{x:Null}"
+                                    Header="NEW EQPT DESCRIPTION" MinWidth="200"
+                                    ElementStyle="{StaticResource CellStyleLeftAlighed}" />
+                <DataGridTextColumn Binding="{Binding New.OperationId}" ClipboardContentBinding="{x:Null}"
+                                    Header="OPERATION ID"
+                                    Width="100" MinWidth="100" ElementStyle="{StaticResource CellStyleCentre}" />
+                <DataGridTextColumn Binding="{Binding AcquisitionValue}" ClipboardContentBinding="{x:Null}"
+                                    Header="PURCHASE VALUE"
+                                    Width="100" MinWidth="100" ElementStyle="{StaticResource CellStyleCentre}"
+                                    IsReadOnly="True" />
+                <DataGridTextColumn Binding="{Binding BookValue}" ClipboardContentBinding="{x:Null}"
+                                    Header="BOOK VALUE"
+                                    Width="100" MinWidth="100" ElementStyle="{StaticResource CellStyleCentre}"
+                                    IsReadOnly="True" />
 
-                <DataGridTextColumn Binding="{Binding New.EquipmentLocation}" ClipboardContentBinding="{x:Null}" Header="LOCATION" Width="100"
-				                    MinWidth="200" ElementStyle="{StaticResource CellStyleCentre}" />
+                <DataGridTextColumn Binding="{Binding New.EquipmentLocation}" ClipboardContentBinding="{x:Null}"
+                                    Header="LOCATION" Width="100"
+                                    MinWidth="200" ElementStyle="{StaticResource CellStyleCentre}" />
             </DataGrid.Columns>
 
-		</DataGrid>
-		<Rectangle Fill="#FF8825FA" HorizontalAlignment="Left" Height="21" VerticalAlignment="Top" Width="70"
-		           Margin="0,22,0,0" />
-		<Label HorizontalAlignment="Left" VerticalAlignment="Top" />
-		<Label Content="E M M A" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="7,19,0,0" Foreground="White"
-		       FontSize="14" FontStretch="Condensed" FontFamily="Calibri" FontWeight="Bold" />
-	</Grid>
+        </DataGrid>
+        <Rectangle Fill="#FF8825FA" HorizontalAlignment="Left" Height="21" VerticalAlignment="Top" Width="70"
+                   Margin="0,22,0,0" />
+        <Label HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <Label Content="E M M A" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="7,19,0,0"
+               Foreground="White"
+               FontSize="14" FontStretch="Condensed" FontFamily="Calibri" FontWeight="Bold" />
+    </Grid>
 </Window>
