@@ -99,8 +99,10 @@
 			        HorizontalAlignment="Left" FontFamily="Calibri" FontSize="13" FontWeight="Bold" />
 			<Button x:Name="SaveButton" Content="SAVE" Style="{DynamicResource NavHeaderButton}"
 			        HorizontalAlignment="Left" FontFamily="Calibri" FontSize="13" FontWeight="Bold" />
-			<Button x:Name="inventoryButton" Content="FAKEDATA" Style="{DynamicResource NavHeaderButton}"
+			<Button x:Name="inventoryButton" Content="LOAD DATA" Style="{DynamicResource NavHeaderButton}"
 			        HorizontalAlignment="Left" FontFamily="Calibri" FontSize="13" FontWeight="Bold" />
+		    <Button x:Name="wipeButton" Content="WIPES DATA" Style="{DynamicResource NavHeaderButton}"
+		            HorizontalAlignment="Left" FontFamily="Calibri" FontSize="13" FontWeight="Bold" />
 			
 		</StackPanel>
 
@@ -149,28 +151,30 @@
 
 			<DataGrid.Columns>
               
-				<DataGridTextColumn Binding="{Binding EquipmentNumber}" ClipboardContentBinding="{x:Null}" Header="ASSET NUMBER"
-				                    IsReadOnly="True" Width="100" MinWidth="150" ElementStyle="{StaticResource CellStyleCentre}" />
-				<DataGridTextColumn Binding="{Binding EquipmentNumber}" ClipboardContentBinding="{x:Null}"
-				                    Header="EQUIPMENT NUMBER"
-				                    IsReadOnly="True" Width="100" MinWidth="150" ElementStyle="{StaticResource CellStyleCentre}" />
+				<DataGridTextColumn Binding="{Binding EquipmentNumber}" ClipboardContentBinding="{x:Null}" Header="ASSET"
+				                    IsReadOnly="True" Width="70" MinWidth="80" ElementStyle="{StaticResource CellStyleCentre}" />
+				<DataGridTextColumn Binding="{Binding AssetNumber}" ClipboardContentBinding="{x:Null}"
+				                    Header="EQUIPMENT"
+				                    IsReadOnly="True" Width="80" MinWidth="80" ElementStyle="{StaticResource CellStyleCentre}" />
 				<!--<DataGridTextColumn Binding="{Binding Description}" ClipboardContentBinding="{x:Null}"
 				                    Header="ITEM DESCRIPTION" MinWidth="200" ElementStyle="{StaticResource CellStyleLeftAlighed}" HeaderTemplate="{StaticResource DescriptionHeaderTemplate}">
 				</DataGridTextColumn>-->
-                <DataGridTextColumn Binding="{Binding Description}" ClipboardContentBinding="{x:Null}"
-				                    Header="ITEM DESCRIPTION" MinWidth="200" ElementStyle="{StaticResource CellStyleLeftAlighed}" >
+                <DataGridTextColumn Binding="{Binding Old.AssetDescription}" ClipboardContentBinding="{x:Null}"
+				                    Header="OLD EQPT DESCRIPTION" MinWidth="200" ElementStyle="{StaticResource CellStyleLeftAlighed}" >
                 </DataGridTextColumn>
-                <DataGridTextColumn Binding="{Binding PhysicalQty}" ClipboardContentBinding="{x:Null}" Header="PHYSICAL QTY"
+                <DataGridTextColumn Binding="{Binding New.AssetDescription}" ClipboardContentBinding="{x:Null}"
+			                        Header="NEW EQPT DESCRIPTION" MinWidth="200" ElementStyle="{StaticResource CellStyleLeftAlighed}" >
+			    </DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding New.OperationId}" ClipboardContentBinding="{x:Null}" Header="OPERATION ID"
+			                        IsReadOnly="True" Width="100" MinWidth="100" ElementStyle="{StaticResource CellStyleCentre}" />
+                <DataGridTextColumn Binding="{Binding AcquisitionValue}" ClipboardContentBinding="{x:Null}" Header="PURCHASE VALUE"
+			                        Width="100" MinWidth="100" ElementStyle="{StaticResource CellStyleCentre}" />
+                <DataGridTextColumn Binding="{Binding BookValue}" ClipboardContentBinding="{x:Null}" Header="BOOK VALUE"
 				                    Width="100" MinWidth="100" ElementStyle="{StaticResource CellStyleCentre}" />
-				<DataGridTextColumn Binding="{Binding StockQty}" ClipboardContentBinding="{x:Null}" Header="STOCK QTY"
-				                    IsReadOnly="True" Width="100" MinWidth="100" ElementStyle="{StaticResource CellStyleCentre}" />
-				<DataGridTextColumn Binding="{Binding Location}" ClipboardContentBinding="{x:Null}" Header="LOCATION" Width="100"
-				                    MinWidth="100" ElementStyle="{StaticResource CellStyleCentre}" />
-				<DataGridTextColumn Binding="{Binding Type}" ClipboardContentBinding="{x:Null}" Header="TYPE" MinWidth="100"
-				                    ElementStyle="{StaticResource CellStyleLeftAlighed}" />
-				<DataGridTextColumn Binding="{Binding Price}" ClipboardContentBinding="{x:Null}" Header="PRICE" MinWidth="100"
-				                    ElementStyle="{StaticResource CellStyleLeftAlighed}" />
-			</DataGrid.Columns>
+
+                <DataGridTextColumn Binding="{Binding New.EquipmentLocation}" ClipboardContentBinding="{x:Null}" Header="LOCATION" Width="100"
+				                    MinWidth="200" ElementStyle="{StaticResource CellStyleCentre}" />
+            </DataGrid.Columns>
 
 		</DataGrid>
 		<Rectangle Fill="#FF8825FA" HorizontalAlignment="Left" Height="21" VerticalAlignment="Top" Width="70"
