@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -40,7 +39,7 @@ namespace EMMA
             Closing += MainWindow_Closing;
             KeyDown += MainWindow_KeyDown;
             SearchBox.KeyDown += SearchBox_KeyDown;
-            //MasterDataGrid.MouseDoubleClick += MasterDataGrid_MouseDoubleClick;
+            MasterDataGrid.MouseDoubleClick += MasterDataGrid_MouseDoubleClick;
             MasterDataGrid.CellEditEnding += MasterDataGrid_CellEditEnding;
             CloseButton.Click += CloseButton_Click;
             SaveButton.Click += SaveButton_Click;
@@ -53,6 +52,43 @@ namespace EMMA
         }
 
         public static ObservableCollection<Equipment> Equipments { get; set; }
+
+        private void copyAssetNumber(object sender, RoutedEventArgs e)
+        {
+            var copytext = "";
+            foreach (Equipment dataGridCellInfo in MasterDataGrid.SelectedItems)
+                if (dataGridCellInfo != null)
+                    copytext = copytext + "\r\n" + dataGridCellInfo.AssetNumber;
+            Clipboard.SetText(copytext);
+        }
+
+        private void copyEquipmentNumber(object sender, RoutedEventArgs e)
+        {
+            var copytext = "";
+            foreach (Equipment dataGridCellInfo in MasterDataGrid.SelectedItems)
+                if (dataGridCellInfo != null)
+                    copytext = copytext + "\r\n" + dataGridCellInfo.EquipmentNumber;
+            Clipboard.SetText(copytext);
+        }
+
+        private void ResetValues(object sender, RoutedEventArgs e)
+        {
+            foreach (Equipment dataGridCellInfo in MasterDataGrid.SelectedItems)
+                if (dataGridCellInfo != null)
+                    dataGridCellInfo.New = dataGridCellInfo.Old;
+
+            MessageBox.Show("Data Reset Completed");
+        }
+
+        private void FilterWithItemLocation(object sender, RoutedEventArgs e)
+        {
+            SearchBox.Text = SearchBox.Text + "+(LOCATION:" +
+                             ((Equipment) MasterDataGrid.SelectedCells[0].Item).New.EquipmentLocation + ")";
+            {
+                Dispatcher.BeginInvoke(DispatcherPriority.Input,
+                    (Action) (() => MasterDataGrid.Items.Filter = MasterFilter));
+            }
+        }
 
 
         #region EVENT HANDLERS
@@ -172,7 +208,7 @@ namespace EMMA
 
         private void MasterDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            DisplayItemDetails(MasterDataGrid.SelectedItem as Equipment);
+            //DisplayItemDetails(MasterDataGrid.SelectedItem as Equipment);
         }
 
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
@@ -200,7 +236,7 @@ namespace EMMA
         {
             {
                 Dispatcher.BeginInvoke(DispatcherPriority.Input,
-                    (Action) (() => MasterDataGrid.Items.Filter = DescriptionFilter));
+                    (Action) (() => MasterDataGrid.Items.Filter = MasterFilter));
             }
         }
 
@@ -242,7 +278,7 @@ namespace EMMA
 
         private void ShowIssueWindow(Equipment equipment)
         {
-            var iw = new IssueWindow();
+            var iw = new ReplaceWindow((List<Equipment>) MasterDataGrid.SelectedItems);
             iw.DataContext = equipment;
             iw.Show();
         }
@@ -464,14 +500,28 @@ namespace EMMA
             Database.SaveChanges();
         }
 
-        private bool DescriptionFilter(object obj)
+        private bool MasterFilter(object obj)
         {
             var filterItem = obj as Equipment;
-            char[] searchSplitters = {'+', '-'};
+            char[] searchSplitters = {'+'};
             var filterText = SearchBox.Text.Split(searchSplitters, StringSplitOptions.RemoveEmptyEntries);
 
             if (filterText.All(s => filterItem.New.AssetDescription.ToLower().Contains(s.ToLower()))) return true;
             if (filterItem.EquipmentNumber.Contains(filterText[0])) return true;
+            if (filterItem.New.OperationId.Contains(filterText[0])) return true;
+
+            if (filterText.Any(m => m.Contains("(LOCATION:")))
+            {
+                if (filterText.Any(s=>s.Contains("(LOCATION:") && s.Substring(10, s.Length - 11) == filterItem.New.EquipmentLocation))
+                {
+                    return true;
+                }
+
+                return false;
+
+            }
+           
+
             return false;
         }
 
@@ -589,8 +639,7 @@ namespace EMMA
                     var e = new Equipment();
                     e.AcquisitionValue = float.Parse(myWorksheet.Cells[i, 6].Text.Trim().Replace(",", string.Empty));
                     e.BookValue = myWorksheet.Cells[i, 8].Text.Trim().Replace(",", string.Empty);
-                    e.AcquisitionDate = DateTime.Parse(myWorksheet.Cells[i, 4].Value.ToString()).ToOADate()
-                        .ToString(CultureInfo.CurrentCulture);
+                    e.AcquisitionDate = DateTime.Parse(myWorksheet.Cells[i, 4].Value.ToString());
                     e.AssetNumber = myWorksheet.Cells[i, 1].Text.Trim();
                     e.EquipmentNumber = myWorksheet.Cells[i, 3].Text.Trim();
                     e.Old.AssetDescription = myWorksheet.Cells[i, 5].Text.Trim();

@@ -13,7 +13,7 @@ namespace EMMA
         public int id { get; set; }
         public string EquipmentNumber { get; set; }
         public string AssetNumber { get; set; }
-        public string AcquisitionDate { get; set; }
+        public DateTime AcquisitionDate { get; set; }
         public bool PendingUpdate { get; set; }
         public float AcquisitionValue { get; set; }
         public string BookValue { get; set; }

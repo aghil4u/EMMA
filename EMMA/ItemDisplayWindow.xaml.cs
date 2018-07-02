@@ -23,9 +23,7 @@ namespace EMMA
 
         private void ShowIssueWindow(Equipment equipment)
         {
-            IssueWindow iw = new IssueWindow();
-            iw.DataContext = equipment;
-            iw.Show();
+         
         }
 
         private void close_button_Click(object sender, RoutedEventArgs e)

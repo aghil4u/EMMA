@@ -139,10 +139,14 @@
                   Style="{StaticResource DatagridStyle1}" RowHeight="30" RowHeaderWidth="0" AutoGenerateColumns="False"
                   GridLinesVisibility="Horizontal" ColumnHeaderHeight="30" HeadersVisibility="Column"
                   RowBackground="{StaticResource DarkerWhite}" MinRowHeight="30" Grid.RowSpan="2" FontFamily="Calibri"
-                  ItemsSource="{Binding Path=., Mode=OneWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}">
+                  ItemsSource="{Binding Path=., Mode=OneWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}"  ClipboardCopyMode="IncludeHeader" >
             <DataGrid.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Edit" Click="EditItem" />
+                    
+                    
+                    <MenuItem Header="Copy Asset Number" Click="copyAssetNumber" /> <MenuItem Header="Copy Equipment Number" Click="copyEquipmentNumber" />
+                    <MenuItem Header="Reset Values" Click="ResetValues" />
+                    <MenuItem Header="Filter With Location" Click="FilterWithItemLocation" />
                 </ContextMenu>
             </DataGrid.ContextMenu>
 
@@ -163,11 +167,13 @@
 
             <DataGrid.Columns>
 
-                <DataGridTextColumn Binding="{Binding EquipmentNumber}" ClipboardContentBinding="{x:Null}"
+                <DataGridTextColumn Binding="{Binding AssetNumber}" ClipboardContentBinding="{x:Null}"
                                     Header="ASSET"
                                     IsReadOnly="True" Width="70" MinWidth="80"
-                                    ElementStyle="{StaticResource CellStyleCentre}" />
-                <DataGridTextColumn Binding="{Binding AssetNumber}" ClipboardContentBinding="{x:Null}"
+                                    ElementStyle="{StaticResource CellStyleCentre}" >
+
+                </DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding EquipmentNumber}" ClipboardContentBinding="{x:Null}"
                                     Header="EQUIPMENT"
                                     IsReadOnly="True" Width="80" MinWidth="80"
                                     ElementStyle="{StaticResource CellStyleCentre}" />
@@ -194,7 +200,10 @@
 
                 <DataGridTextColumn Binding="{Binding New.EquipmentLocation}" ClipboardContentBinding="{x:Null}"
                                     Header="LOCATION" Width="100"
-                                    MinWidth="200" ElementStyle="{StaticResource CellStyleCentre}" />
+                                    MinWidth="150" ElementStyle="{StaticResource CellStyleCentre}" />
+                <DataGridTextColumn Binding="{Binding AcquisitionDate , StringFormat={}{0:dd/MM/yyyy}}" ClipboardContentBinding="{x:Null}"
+                                    Header="DATE" Width="100"
+                                    MinWidth="100" ElementStyle="{StaticResource CellStyleCentre}" />
             </DataGrid.Columns>
 
         </DataGrid>

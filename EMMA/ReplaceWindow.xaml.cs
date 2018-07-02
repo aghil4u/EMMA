@@ -1,16 +1,19 @@
-﻿using System.Windows;
+﻿using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Input;
 
 namespace EMMA
 {
     /// <summary>
-    ///     Interaction logic for IssueWindow.xaml
+    ///     Interaction logic for ReplaceWindow.xaml
     /// </summary>
-    public partial class IssueWindow : Window
+    public partial class ReplaceWindow : Window
     {
-        public IssueWindow()
+        public List<Equipment> ItemsList;
+        public ReplaceWindow(List<Equipment> items)
         {
             InitializeComponent();
+            ItemsList = items;
             Loaded += IssueWindow_Loaded;
             KeyDown += IssueWindow_KeyDown;
         }
@@ -25,7 +28,7 @@ namespace EMMA
 
         private void IssueWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            qty_textbox.Focus();
+            searchtextbox.Focus();
         }
 
         private void CloseButtonClick(object sender, RoutedEventArgs e)
@@ -33,7 +36,7 @@ namespace EMMA
             Close();
         }
 
-        private void SaveButtonClick(object sender, RoutedEventArgs e)
+        private void ReplaceButtonClick(object sender, RoutedEventArgs e)
         {
            // MainWindow.Database.NewTransaction(DataContext as Equipment, double.Parse(qty_textbox.Text), project_textbox.Text,
              //   Transaction.TransactionTypes.Release);
