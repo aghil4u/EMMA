@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
 
@@ -9,16 +10,16 @@ namespace EMMA
     /// </summary>
     public partial class ReplaceWindow : Window
     {
-        public List<Equipment> ItemsList;
-        public ReplaceWindow(List<Equipment> items)
+        public IList ItemsList { get; set; }
+        public ReplaceWindow(IList items)
         {
             InitializeComponent();
             ItemsList = items;
-            Loaded += IssueWindow_Loaded;
-            KeyDown += IssueWindow_KeyDown;
+            Loaded += WindowLoaded;
+            KeyDown += WindowKeyDown;
         }
 
-        private void IssueWindow_KeyDown(object sender, KeyEventArgs e)
+        private void WindowKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
             {
@@ -26,8 +27,9 @@ namespace EMMA
             }
         }
 
-        private void IssueWindow_Loaded(object sender, RoutedEventArgs e)
+        private void WindowLoaded(object sender, RoutedEventArgs e)
         {
+            ItemCount.Content = ItemsList.Count + " Items Selected";
             searchtextbox.Focus();
         }
 
@@ -38,8 +40,10 @@ namespace EMMA
 
         private void ReplaceButtonClick(object sender, RoutedEventArgs e)
         {
-           // MainWindow.Database.NewTransaction(DataContext as Equipment, double.Parse(qty_textbox.Text), project_textbox.Text,
-             //   Transaction.TransactionTypes.Release);
+            foreach (Equipment equipment in ItemsList)
+            {
+                equipment.New.EquipmentDescription.Replace(searchtextbox.Text, replacetextbox.Text);
+            }
 
             Close();
         }

@@ -117,11 +117,11 @@
         <Border BorderBrush="#FFD7D6DB" BorderThickness="1" Background="#FFF8F8FA" Margin="1,0" Height="63"
                 VerticalAlignment="Bottom" Padding="0">
             <Grid Margin="-1">
-                <TextBox x:Name="SearchBox" Style="{StaticResource SearchTextBox}" TextWrapping="Wrap" Text="Search"
+                <TextBox x:Name="SearchBox" Style="{StaticResource SearchTextBox}" VerticalContentAlignment="Center" TextWrapping="Wrap" Text="Search"
                          HorizontalAlignment="Left"
-                         Width="222" Margin="22,21,0,20" BorderThickness="1" Background="Transparent"
+                         Width="406" Margin="22,21,0,20.8" BorderThickness="1" Background="Transparent"
                          SelectionBrush="#FF67829C"
-                         TabIndex="1" />
+                         TabIndex="1" FontFamily="Segoe UI Semibold" FontSize="11" />
                 <TextBlock x:Name="_statusTextBlock" Margin="0,21,10,20" TextWrapping="Wrap"
                            HorizontalAlignment="Right"
                            TextAlignment="Right" FontFamily="Segoe UI Symbol" />
@@ -139,13 +139,15 @@
                   Style="{StaticResource DatagridStyle1}" RowHeight="30" RowHeaderWidth="0" AutoGenerateColumns="False"
                   GridLinesVisibility="Horizontal" ColumnHeaderHeight="30" HeadersVisibility="Column"
                   RowBackground="{StaticResource DarkerWhite}" MinRowHeight="30" Grid.RowSpan="2" FontFamily="Calibri"
-                  ItemsSource="{Binding Path=., Mode=OneWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}"  ClipboardCopyMode="IncludeHeader" >
+                  ItemsSource="{Binding Path=., Mode=OneWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" CanUserDeleteRows="False" ClipboardCopyMode="IncludeHeader" >
             <DataGrid.ContextMenu>
                 <ContextMenu>
-                    
-                    
-                    <MenuItem Header="Copy Asset Number" Click="copyAssetNumber" /> <MenuItem Header="Copy Equipment Number" Click="copyEquipmentNumber" />
+
+
+                    <MenuItem Header="Copy Asset Number" Click="copyAssetNumber" />
+                    <MenuItem Header="Copy Equipment Number" Click="copyEquipmentNumber" />
                     <MenuItem Header="Reset Values" Click="ResetValues" />
+                    <MenuItem Header="Find and Replace" Click="FindReplace" />
                     <MenuItem Header="Filter With Location" Click="FilterWithItemLocation" />
                 </ContextMenu>
             </DataGrid.ContextMenu>
@@ -204,6 +206,9 @@
                 <DataGridTextColumn Binding="{Binding AcquisitionDate , StringFormat={}{0:dd/MM/yyyy}}" ClipboardContentBinding="{x:Null}"
                                     Header="DATE" Width="100"
                                     MinWidth="100" ElementStyle="{StaticResource CellStyleCentre}" />
+                <DataGridTextColumn Binding="{Binding New.SerialNumber}" ClipboardContentBinding="{x:Null}"
+                                    Header="SERIAL NUMBER" MinWidth="200"
+                                    ElementStyle="{StaticResource CellStyleLeftAlighed}" />
             </DataGrid.Columns>
 
         </DataGrid>
