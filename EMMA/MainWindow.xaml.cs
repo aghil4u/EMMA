@@ -530,6 +530,7 @@ namespace EMMA
             if (filterText.All(s =>
                 filterItem.New.EquipmentDescription.ToLower().Contains(s.ToLower()) || s.Contains(":"))) return true;
             if (filterItem.EquipmentNumber.Contains(filterText[0])) return true;
+            if (filterItem.AssetNumber.Contains(filterText[0])) return true;
             if (filterItem.New.OperationId.Contains(filterText[0])) return true;
             return false;
         }
